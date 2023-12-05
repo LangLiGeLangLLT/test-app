@@ -11,15 +11,17 @@ export default function Page() {
     if (videoRef.current) {
       intersectionObserver = new IntersectionObserver(
         (entires) => {
-          if (entires[0].isIntersecting) {
-            videoRef.current?.play()
-          } else {
-            videoRef.current?.pause()
-          }
+          entires.forEach((entry) => {
+            if (entry.isIntersecting) {
+              videoRef.current?.play()
+            } else {
+              videoRef.current?.pause()
+            }
+          })
         },
         {
-          rootMargin: '0px 0px 0px 0px',
-          threshold: 0.9,
+          rootMargin: '-10% 0px -10% 0px',
+          threshold: 0.99,
         }
       )
 
@@ -33,8 +35,8 @@ export default function Page() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <div className="grow flex flex-col justify-center items-center">
+    <div className="container">
+      <div className="flex flex-col justify-center items-center">
         <div className="w-full h-[1200px] bg-rose-300"></div>
         <video
           ref={videoRef}
@@ -42,6 +44,7 @@ export default function Page() {
           muted
           playsInline
           controls
+          loop
           src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
         />
         <div className="w-full h-[1200px] bg-rose-300"></div>
